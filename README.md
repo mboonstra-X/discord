@@ -159,24 +159,7 @@ if (!quests.length) {
       const realFunc = ApplicationStreamingStore.getStreamerActiveStreamMetadata;
       ApplicationStreamingStore.getStreamerActiveStreamMetadata = () => ({ id: appId, pid, sourceName: null });
 
-      const fn = data => {
-        const progress = Math.floor(data.userStatus.progress.STREAM_ON_DESKTOP.value);
-        console.log(`Progress: ${progress}/${secondsNeeded}`);
-        if (progress >= secondsNeeded) {
-          ApplicationStreamingStore.getStreamerActiveStreamMetadata = realFunc;
-          FluxDispatcher.unsubscribe("QUESTS_SEND_HEARTBEAT_SUCCESS", fn);
-          console.log(`Quest "${questName}" completed!`);
-          doJob();
-        }
-      };
 
-      FluxDispatcher.subscribe("QUESTS_SEND_HEARTBEAT_SUCCESS", fn);
-      console.log(`Spoofed stream for "${questName}".`);
-    }
-  };
-
-  doJob();
-}
 ```
 
 </details>
